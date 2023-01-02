@@ -35,7 +35,7 @@ const TodoList = ({
               <input
                type="checkbox" 
                checked={todo.completed} 
-               onChange={onToggle.bind(null, todo.id)}/>
+               onChange={() =>  onToggle(todo.id)}/>
               <span>{todo.title}</span>
               <i
                 className="material-icons red-text"

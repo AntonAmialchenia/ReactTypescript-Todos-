@@ -1,53 +1,24 @@
-import React, {useState} from 'react';
+import React from 'react';
 import Navbar from './components/Navbar';
-import TodoForm from './components/TodoForm';
-import TodoList from './components/TodoList';
-import { ITodo } from './interfaces';
+import { BrowserRouter, Routes, Route} from 'react-router-dom'
+import TodosPage from './pages/TodosPage';
+import AboutPage from './pages/AboutPage';
 
- 
-declare var confirm: (question: string) => boolean
+
+
 
 function App() {
-
-  const [todos, setTodos] = useState<ITodo[]>([])
-
-  const addHandler = (title: string) => {
-    const newTodo: ITodo = {
-      title: title,
-      id: Date.now(),
-      completed: false
-    }
-    // setTodos([newTodo, ...todos])
-    setTodos(prev => [newTodo, ...todos])
-  }
-
-  const toggleHandler = (id: number) => {
-    setTodos(prev => prev.map(todo => {
-      if (todo.id === id) {
-        todo.completed = !todo.completed
-      }
-      return todo
-    }))
-  }
-
-  const removeHandler = (id: number) => {
-     
-    if (confirm('Вы уверены, что хотите удалить элемент?')) {
-      setTodos(prev => prev.filter(todo => todo.id !== id))
-    }
-    
-  }
-
+ 
   return (
-    <>
-    <Navbar/>
-    <div className='container'>
-      
-    <TodoForm onAdd={addHandler}/>
-
-    <TodoList todos={todos} onToggle={toggleHandler} onRemove={removeHandler}/>
-    </div>
-    </>
+    <BrowserRouter>
+      <Navbar />
+      <div className="container">
+        <Routes>
+          <Route path='/' element={<TodosPage/>} />
+          <Route path='/about' element={<AboutPage/>}/>
+        </Routes>
+      </div>
+    </BrowserRouter>
   );
 }
 
