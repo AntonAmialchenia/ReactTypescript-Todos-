@@ -4,6 +4,8 @@ import TodoForm from './components/TodoForm';
 import TodoList from './components/TodoList';
 import { ITodo } from './interfaces';
 
+ 
+declare var confirm: (question: string) => boolean
 
 function App() {
 
@@ -20,10 +22,19 @@ function App() {
   }
 
   const toggleHandler = (id: number) => {
-
+    setTodos(prev => prev.map(todo => {
+      if (todo.id === id) {
+        todo.completed = !todo.completed
+      }
+      return todo
+    }))
   }
 
   const removeHandler = (id: number) => {
+     
+    if (confirm('Вы уверены, что хотите удалить элемент?')) {
+      setTodos(prev => prev.filter(todo => todo.id !== id))
+    }
     
   }
 
